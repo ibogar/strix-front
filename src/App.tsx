@@ -1,6 +1,17 @@
+import Form from "./components/Form"
+import Header from "./components/Header"
+import { GlobalCss } from "./styles"
+
 function App() {
 
-  return <h1>Hello world!</h1>
+  return (
+    <div className="container">
+      <GlobalCss />
+      <Header />
+      <Form />
+    </div>
+  )
+  
 }
 
 export default App
