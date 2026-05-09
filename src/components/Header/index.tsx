@@ -1,37 +1,45 @@
 import { Link, useLocation } from 'react-router-dom'
 
-import logopng from '../../../assets/logo_256.png'
+import logo512 from '../../../assets/logo_512.png'
+import logo256 from '../../../assets/logo_256.png'
 
 import * as S from './styles'
 
 const Header = () => {
-    return (
-        <>
-            <S.Logo href={"/"} $width="512px">
-                <img src={logopng} alt="Strix logo" />
-            </S.Logo >
-            <S.HeaderTitle>
-                Welcome to <span>Strix</span>! Your new way to share knowledge
-            </S.HeaderTitle>
+    const location = useLocation();
 
-            <S.Navbar>
-                <S.Logo href={"/"} $width="32px">
-                    <img src={logopng} alt="Strix logo" />
+    if (location.pathname === '/') {
+        return (
+            <S.HeaderContainer>
+                <S.Logo to={"/"} $width="512px">
+                    <img src={logo512} alt="Strix logo" />
                 </S.Logo >
-                <div>
-                    <S.NavLink href={"/"}>
-                        <i className="bi bi-house-door-fill"></i>
-                        <h2>Home</h2>
-                    </S.NavLink>
-                    <S.NavLink href={"/"}>
-                        <i className="bi bi-person-circle"></i>
-                        <h2>Profile</h2>
-                    </S.NavLink>
-                </div>
-            </S.Navbar>
-        </>
-
-    )
+                <S.HeaderTitle>
+                    Welcome to{' '}<span>Strix</span>! Your new way to share knowledge
+                </S.HeaderTitle>
+            </S.HeaderContainer>
+        )
+    } else {
+        return (
+            <>
+                <S.Navbar>
+                    <S.Logo to={"/"} $width="80px">
+                        <img src={logo256} alt="Strix logo" />
+                    </S.Logo >
+                    <S.NavLinksContainer>
+                        <S.NavLink to={"/"}>
+                            <i className="bi bi-house-door-fill"></i>
+                            <h2>Home</h2>
+                        </S.NavLink>
+                        <S.NavLink to={"/profile"}>
+                            <i className="bi bi-person-circle"></i>
+                            <h2>Profile</h2>
+                        </S.NavLink>
+                    </S.NavLinksContainer>
+                </S.Navbar>
+            </>
+        )
+    }
 }
 
 export default Header
