@@ -88,28 +88,3 @@ export const BtnContainer = styled.div`
     gap: 8px;
     align-self: flex-end;
 `
-
-export const PostBtn = styled.button`
-    padding: 8px 24px;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s ease;
-
-    &.edit {
-        background-color: ${colors.carrotOrange};
-        color: ${colors.jetBlack};
-        border: 2px solid ${colors.carrotOrange};
-    }
-
-    &.delete {
-        background-color: ${colors.scarletFire};
-        color: ${colors.jetBlack};
-        border: 2px solid ${colors.scarletFire};
-    }
-
-    &:hover {
-        box-shadow: 4px 4px ${colors.cerulean};
-    }
-`

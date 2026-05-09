@@ -1,3 +1,4 @@
+import { Btn } from '../../styles'
 import * as S from './styles'
 
 const Post = () => {
@@ -20,13 +21,13 @@ const Post = () => {
             </S.ActionsContainer>
 
             <S.BtnContainer>
-                <S.PostBtn className="edit">
+                <Btn className="positive">
                     Edit
-                </S.PostBtn>
+                </Btn>
 
-                <S.PostBtn className="delete">
+                <Btn className="danger">
                     Delete
-                </S.PostBtn>
+                </Btn>
             </S.BtnContainer>
         </S.Footer>
         </S.PostContainer>

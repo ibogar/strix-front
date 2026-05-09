@@ -61,3 +61,28 @@ export const PageTitle = styled.h2`
     border-bottom: 1px solid ${colors.darkSlateGrey};
     margin-bottom: 20px;
 `
+
+export const Btn = styled.button`
+    padding: 8px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &.positive {
+        background-color: ${colors.carrotOrange};
+        color: ${colors.jetBlack};
+        border: 2px solid ${colors.carrotOrange};
+    }
+
+    &.danger {
+        background-color: ${colors.scarletFire};
+        color: ${colors.jetBlack};
+        border: 2px solid ${colors.scarletFire};
+    }
+
+    &:hover {
+        box-shadow: 4px 4px ${colors.cerulean};
+    }
+`

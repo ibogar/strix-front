@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 import { colors, fonts } from '../../styles'
 
+type PicProps = {
+    $path: string
+}
 
 export const SidebarContainer = styled.aside`
     position: sticky;
@@ -15,8 +18,8 @@ export const SidebarContainer = styled.aside`
     box-shadow: 2px 2px 0 ${colors.cerulean};
 `
 
-export const ProfilePic = styled.img`
-    width: 100%;
+export const ProfilePic = styled.img<PicProps>`
+    width: ${({$path}) => $path === '/edit_profile' ? '320px' : '100%'};
     box-shadow: 2px 2px 0 ${colors.darkSlateGrey}CC;
     border-radius: 50%;
     margin: 8px 0;
