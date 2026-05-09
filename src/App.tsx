@@ -1,15 +1,16 @@
-import Form from "./components/Form"
-import Header from "./components/Header"
+import { BrowserRouter } from 'react-router-dom'
+
 import { GlobalCss } from "./styles"
+
+import MyRoutes from './routes'
 
 function App() {
 
   return (
-    <div className="container">
-      <GlobalCss />
-      <Header />
-      <Form />
-    </div>
+    <BrowserRouter>
+            <GlobalCss />
+            <MyRoutes />
+    </BrowserRouter>
   )
   
 }
