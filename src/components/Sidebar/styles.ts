@@ -5,6 +5,8 @@ import { colors, fonts } from '../../styles'
 
 
 export const SidebarContainer = styled.aside`
+    position: sticky;
+    top: 24px;
     background-color: ${colors.paleSky}33;
     max-width: 360px;
     padding: 8px;
