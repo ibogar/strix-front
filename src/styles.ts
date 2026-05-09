@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const colors = {
     white: '#FFF',
@@ -41,4 +41,13 @@ export const GlobalCss = createGlobalStyle`
         width: 100%;
         margin: 0 auto;
     }
+`
+
+export const Content = styled.div`
+    width: 100%;
+    display: grid;
+    align-items: start;
+    gap: 16px;
+    grid-template-columns: 25% 75%;
+    padding: 16px;
 `

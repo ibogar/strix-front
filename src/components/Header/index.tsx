@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import logo512 from '../../../assets/logo_512.png'
 import logo256 from '../../../assets/logo_256.png'
@@ -8,10 +8,10 @@ import * as S from './styles'
 const Header = () => {
     const location = useLocation();
 
-    if (location.pathname === '/') {
+    if (location.pathname === '/login' || location.pathname === '/register') {
         return (
             <S.HeaderContainer>
-                <S.Logo to={"/"} $width="512px">
+                <S.Logo to={"/"} $width="400px">
                     <img src={logo512} alt="Strix logo" />
                 </S.Logo >
                 <S.HeaderTitle>
