@@ -1,4 +1,4 @@
-import styled ,{ createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 export const colors = {
     white: '#FFF',
@@ -7,7 +7,8 @@ export const colors = {
     cerulean: '#2978a0',
     paleSky: '#c6e0ff',
     carrotOrange: '#f1933f',
-    snow: '#fffafa'
+    snow: '#fffafa',
+    scarletFire: '#ff4328ff'
 }
 
 export const breakpoints = {
