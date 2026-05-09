@@ -1,4 +1,4 @@
-import styled ,{ createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 export const colors = {
     white: '#FFF',
@@ -7,7 +7,8 @@ export const colors = {
     cerulean: '#2978a0',
     paleSky: '#c6e0ff',
     carrotOrange: '#f1933f',
-    snow: '#fffafa'
+    snow: '#fffafa',
+    scarletFire: '#ff4328ff'
 }
 
 export const breakpoints = {
@@ -39,5 +40,49 @@ export const GlobalCss = createGlobalStyle`
         max-width: 1024px;
         width: 100%;
         margin: 0 auto;
+    }
+`
+
+export const Content = styled.div`
+    width: 100%;
+    display: grid;
+    align-items: start;
+    gap: 16px;
+    grid-template-columns: 25% 75%;
+    padding: 16px;
+`
+
+export const PageTitle = styled.h2`
+    font-size: 40px;
+    font-weight: bold;
+    font-family: ${fonts.highlightFont};
+    color: ${colors.carrotOrange};
+    text-shadow: 2px 2px ${colors.cerulean};
+    border-bottom: 1px solid ${colors.darkSlateGrey};
+    margin-bottom: 20px;
+`
+
+export const Btn = styled.button`
+    padding: 8px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &.positive {
+        background-color: ${colors.carrotOrange};
+        color: ${colors.jetBlack};
+        border: 2px solid ${colors.carrotOrange};
+    }
+
+    &.danger {
+        background-color: ${colors.scarletFire};
+        color: ${colors.jetBlack};
+        border: 2px solid ${colors.scarletFire};
+    }
+
+    &:hover {
+        box-shadow: 4px 4px ${colors.cerulean};
     }
 `

@@ -40,14 +40,21 @@ export const FormBtn = styled.button`
   background-color: ${colors.carrotOrange};
   border: 2px solid ${colors.carrotOrange};
   border-radius: 25px;
-  color: ${colors.paleSky};
+  color: ${colors.jetBlack};
   font-size: 1.5em;
   font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+
+  &:hover {
+    box-shadow: 4px 4px ${colors.cerulean};
+  }
 `
 
 export const Register = styled.p`
   display:flex;
   justify-content: center;
+  gap: 8px;
   color: ${colors.paleSky};
   font-weight: bold;
   margin-top: 24px;
@@ -56,9 +63,6 @@ export const Register = styled.p`
 
   a {
     color: ${colors.carrotOrange};
-  }
-
-  Link {
-    color: ${colors.cerulean};
+    text-decoration: none;
   }
 `
