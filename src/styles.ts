@@ -51,3 +51,13 @@ export const Content = styled.div`
     grid-template-columns: 25% 75%;
     padding: 16px;
 `
+
+export const PageTitle = styled.h2`
+    font-size: 40px;
+    font-weight: bold;
+    font-family: ${fonts.highlightFont};
+    color: ${colors.carrotOrange};
+    text-shadow: 2px 2px ${colors.cerulean};
+    border-bottom: 1px solid ${colors.darkSlateGrey};
+    margin-bottom: 20px;
+`
