@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import * as S from './styles'
 
 const Form = () => {
@@ -13,7 +14,10 @@ const Form = () => {
                     <input type="text" name="" id="" />
                 </S.InputGroup>
                 <S.FormBtn>Log in</S.FormBtn>
-                <S.Register>Don't have an account? <a href="">Register here.</a></S.Register>
+                <S.Register>
+                    Don't have an account? 
+                    <Link to={"/register"}>Register here.</Link>
+                </S.Register>
                 
             </S.FormContainer>
         </>
