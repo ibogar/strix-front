@@ -1,12 +1,12 @@
 import Header from '../../components/Header'
-import Form from '../../components/Form'
+import LoginForm from '../../components/forms/LoginForm'
 
 
 const Login = () => {
     return (
         <div className="container">
             <Header />
-            <Form />
+            <LoginForm />
         </div>
     ) 
 }
