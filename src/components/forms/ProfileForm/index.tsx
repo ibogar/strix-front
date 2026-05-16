@@ -1,19 +1,24 @@
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-
-import passwordToggle from '../../../utils/passwordToggle'
 
 import * as S from '../styles'
 
 import { Btn } from '../../../styles'
 
 const ProfileForm = () => {
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+
+    const [showNewPassword, setShowNewPassword] = useState(false)
+
+    const [ showConfirmPassword, setShowConfirmPassword ] = useState(false)
+
     const form = useFormik({
         initialValues: {
             name: '',
             username: '',
             bio: '',
-            image: '',
+            image: null,
             currentPassword: '',
             newPassword: '',
             confirmNewPassword: ''
@@ -35,8 +40,29 @@ const ProfileForm = () => {
             bio: Yup.string()
                 .max(160, 'Bio must have at most 160 characters'),
 
-            image: Yup.string()
-                .url('Insert a valid URL'),
+            image: Yup.mixed<File>()
+                .test(
+                    'fileSize',
+                    'Image is too large',
+                    (value) => {
+                        if (!value) return true
+
+                        return value.size <= 5 * 1024 * 1024
+                    }
+                )
+                .test(
+                    'fileFormat',
+                    'Unsupported format',
+                    (value) => {
+                        if (!value) return true
+
+                        return [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp'
+                        ].includes(value.type)
+                    }
+                ),
 
             currentPassword: Yup.string()
                 .when('newPassword', {
@@ -73,6 +99,9 @@ const ProfileForm = () => {
         }),
 
         onSubmit: (values) => {
+            console.log(values)
+        }
+        /* onSubmit: (values) => {
             const payload: Record<string, string> = {}
 
             Object.entries(values).forEach(([key, value]) => {
@@ -82,7 +111,7 @@ const ProfileForm = () => {
             })
 
             console.log(payload)
-        }
+        } */
     })
 
     const checkInputHasError = (fieldName: keyof typeof form.values) => {
@@ -92,14 +121,12 @@ const ProfileForm = () => {
         return isTouched && isInvalid
     }
 
-    const { showPassword, togglePasswordVisibility } = passwordToggle()
-
     return (
         <S.FormContainer onSubmit={form.handleSubmit}>
             <S.InputGroup>
-                <label htmlFor="name">
+                <S.Label htmlFor="name">
                     Name
-                </label>
+                </S.Label>
 
                 <input
                     id="name"
@@ -112,16 +139,16 @@ const ProfileForm = () => {
                 />
 
                 {checkInputHasError('name') && (
-                    <small>
+                    <S.InputError>
                         {form.errors.name}
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 
             <S.InputGroup>
-                <label htmlFor="username">
+                <S.Label htmlFor="username">
                     Username
-                </label>
+                </S.Label>
 
                 <input
                     id="username"
@@ -134,16 +161,16 @@ const ProfileForm = () => {
                 />
 
                 {checkInputHasError('username') && (
-                    <small>
+                    <S.InputError>
                         {form.errors.username}
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 
             <S.InputGroup>
-                <label htmlFor="bio">
+                <S.Label htmlFor="bio">
                     Bio
-                </label>
+                </S.Label>
 
                 <textarea
                     id="bio"
@@ -155,159 +182,176 @@ const ProfileForm = () => {
                 />
 
                 {checkInputHasError('bio') && (
-                    <small>
+                    <S.InputError>
                         {form.errors.bio}
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 
             <S.InputGroup>
-                <label htmlFor="image">
-                    Profile image URL
-                </label>
+                <S.Label htmlFor="image">
+                    Profile image
+                </S.Label>
 
-                <input
+                <S.FileInputLabel htmlFor="image">
+                    Upload image
+                </S.FileInputLabel>
+
+                <S.Filename>
+                    {form.values.image?.name || 'No file selected'}
+                </S.Filename>
+
+                <S.FileInput
                     id="image"
                     name="image"
-                    type="text"
-                    placeholder="https://..."
-                    value={form.values.image}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {
+                        const file =
+                            event.currentTarget.files?.[0]
+
+                        form.setFieldValue('image', file)
+                    }}
                 />
 
                 {checkInputHasError('image') && (
-                    <small>
+                    <S.InputError>
                         {form.errors.image}
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 
             <S.InputGroup>
-                <label htmlFor="currentPassword">
+                <S.Label htmlFor="currentPassword">
                     Current password
-                </label>
+                </S.Label>
 
-                <input
-                    id="currentPassword"
-                    name="currentPassword"
-                    type={
-                        showPassword.current
-                            ? 'text'
-                            : 'password'
-                    }
-                    placeholder="Current password"
-                    value={form.values.currentPassword}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                />
-
-                <S.TogglePasswordBtn
-                    type="button"
-                    onClick={() =>
-                        togglePasswordVisibility('current')
-                    }
-                >
-                    <i
-                        className={
-                            showPassword.current
-                                ? 'bi bi-eye-slash-fill'
-                                : 'bi bi-eye-fill'
+                <S.PasswordWrapper>
+                    <input
+                        id="currentPassword"
+                        name="currentPassword"
+                        type={
+                            showCurrentPassword
+                                ? 'text'
+                                : 'password'
                         }
+                        placeholder="Current password"
+                        value={form.values.currentPassword}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                     />
-                </S.TogglePasswordBtn>
+
+                    <S.TogglePasswordBtn
+                        type="button"
+                        onClick={() =>
+                            setShowCurrentPassword(!showCurrentPassword)
+                        }
+                    >
+                        <i
+                            className={
+                                showCurrentPassword
+                                    ? 'bi bi-eye-slash-fill'
+                                    : 'bi bi-eye-fill'
+                            }
+                        />
+                    </S.TogglePasswordBtn>
+                </S.PasswordWrapper>
 
                 {checkInputHasError('currentPassword') && (
-                    <small>
+                    <S.InputError>
                         {form.errors.currentPassword}
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 
             <S.InputGroup>
-                <label htmlFor="newPassword">
+                <S.Label htmlFor="newPassword">
                     New password
-                </label>
+                </S.Label>
 
-                <input
-                    id="newPassword"
-                    name="newPassword"
-                    type={
-                        showPassword.new
-                            ? 'text'
-                            : 'password'
-                    }
-                    placeholder="New password"
-                    value={form.values.newPassword}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                />
-
-                <S.TogglePasswordBtn
-                    type="button"
-                    onClick={() =>
-                        togglePasswordVisibility('new')
-                    }
-                >
-                    <i
-                        className={
-                            showPassword.new
-                                ? 'bi bi-eye-slash-fill'
-                                : 'bi bi-eye-fill'
+                <S.PasswordWrapper>
+                    <input
+                        id="newPassword"
+                        name="newPassword"
+                        type={
+                            showNewPassword
+                                ? 'text'
+                                : 'password'
                         }
+                        placeholder="New password"
+                        value={form.values.newPassword}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                     />
-                </S.TogglePasswordBtn>
+
+                    <S.TogglePasswordBtn
+                        type="button"
+                        onClick={() =>
+                            setShowNewPassword(!showNewPassword)
+                        }
+                    >
+                        <i
+                            className={
+                                showNewPassword
+                                    ? 'bi bi-eye-slash-fill'
+                                    : 'bi bi-eye-fill'
+                            }
+                        />
+                    </S.TogglePasswordBtn>
+                </S.PasswordWrapper>
 
                 {checkInputHasError('newPassword') && (
-                    <small>
+                    <S.InputError>
                         {form.errors.newPassword}
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 
             <S.InputGroup>
-                <label htmlFor="confirmNewPassword">
+                <S.Label htmlFor="confirmNewPassword">
                     Confirm new password
-                </label>
+                </S.Label>
 
-                <input
-                    id="confirmNewPassword"
-                    name="confirmNewPassword"
-                    type={
-                        showPassword.confirm
-                            ? 'text'
-                            : 'password'
-                    }
-                    placeholder="Confirm new password"
-                    value={form.values.confirmNewPassword}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                />
-
-                <S.TogglePasswordBtn
-                    type="button"
-                    onClick={() =>
-                        togglePasswordVisibility('confirm')
-                    }
-                >
-                    <i
-                        className={
-                            showPassword.confirm
-                                ? 'bi bi-eye-slash-fill'
-                                : 'bi bi-eye-fill'
+                <S.PasswordWrapper>
+                    <input
+                        id="confirmNewPassword"
+                        name="confirmNewPassword"
+                        type={
+                            showConfirmPassword
+                                ? 'text'
+                                : 'password'
                         }
+                        placeholder="Confirm new password"
+                        value={form.values.confirmNewPassword}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                     />
-                </S.TogglePasswordBtn>
+
+                    <S.TogglePasswordBtn
+                        type="button"
+                        onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                        }
+                    >
+                        <i
+                            className={
+                                showConfirmPassword
+                                    ? 'bi bi-eye-slash-fill'
+                                    : 'bi bi-eye-fill'
+                            }
+                        />
+                    </S.TogglePasswordBtn>
+                </S.PasswordWrapper>
 
                 {checkInputHasError(
                     'confirmNewPassword'
                 ) && (
-                    <small>
+                    <S.InputError>
                         {
                             form.errors
                                 .confirmNewPassword
                         }
-                    </small>
+                    </S.InputError>
                 )}
             </S.InputGroup>
 

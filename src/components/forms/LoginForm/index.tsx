@@ -1,13 +1,13 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-
-import passwordToggle from '../../../utils/passwordToggle'
 
 import * as S from '../styles'
 import { Btn } from '../../../styles'
 
 const LoginForm = () => {
+    const [ showPassword, setShowPassword ] = useState(false)
 
     const form = useFormik({
         initialValues: {
@@ -19,7 +19,6 @@ const LoginForm = () => {
                 .email('Invalid e-mail')
                 .required('E-mail is required'),
             password: Yup.string()
-                .min(8, 'Password must have at least 8 characters')
                 .required('Password is required'),
         }),
         onSubmit: (values) => {
@@ -34,12 +33,10 @@ const LoginForm = () => {
         return isTouched && isInvalid
     }
 
-    const { showPassword, togglePasswordVisibility } = passwordToggle()
-
     return (
         <S.FormContainer onSubmit={form.handleSubmit}>
             <S.InputGroup>
-                <label htmlFor="">E-mail</label>
+                <S.Label htmlFor="email">E-mail</S.Label>
                 <input 
                     type="email" 
                     name="email" 
@@ -48,17 +45,47 @@ const LoginForm = () => {
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
                 />
+                {checkInputHasError('email') && (
+                    <S.InputError>
+                        {form.errors.email}
+                    </S.InputError>
+                )}
             </S.InputGroup>
             <S.InputGroup>
-                <label htmlFor="">Password</label>
-                <input 
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={form.values.password}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                />
+                <S.Label htmlFor="password">Password</S.Label>
+                <S.PasswordWrapper>
+                    <input 
+                        type={
+                            showPassword
+                                ? 'text'
+                                : 'password'
+                        }
+                        name="password"
+                        id="password"
+                        value={form.values.password}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                    />
+                    <S.TogglePasswordBtn
+                        type="button"
+                        onClick={() =>
+                            setShowPassword(!showPassword)
+                        }
+                    >
+                        <i
+                            className={
+                                showPassword
+                                    ? 'bi bi-eye-slash-fill'
+                                    : 'bi bi-eye-fill'
+                            }
+                        />
+                    </S.TogglePasswordBtn>
+                </S.PasswordWrapper>
+                {checkInputHasError('password') && (
+                    <S.InputError>
+                        {form.errors.password}
+                    </S.InputError>
+                )}
             </S.InputGroup>
             <Btn 
             className="positive" 

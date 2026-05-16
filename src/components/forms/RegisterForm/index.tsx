@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-
-import passwordToggle from '../../../utils/passwordToggle'
 
 import * as S from '../styles'
 import { Btn } from '../../../styles'
 
 const RegisterForm = () => {
+    const [ showPassword, setShowPassword ] = useState(false)
+    const [ showConfirmPassword, setShowConfirmPassword ] = useState(false)
 
     const form = useFormik({
         initialValues: {
@@ -53,8 +54,6 @@ const RegisterForm = () => {
         return isTouched && isInvalid
     }
 
-    const { showPassword, togglePasswordVisibility } = passwordToggle()
-
     return (
         <S.FormContainer onSubmit={form.handleSubmit}>
             <S.InputGroup>
@@ -67,8 +66,13 @@ const RegisterForm = () => {
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
                 />
+                {checkInputHasError('email') && (
+                    <S.InputError>
+                        {form.errors.email}
+                    </S.InputError>
+                )}
             </S.InputGroup>
-                        <S.InputGroup>
+            <S.InputGroup>
                 <label htmlFor="username">Username</label>
                 <input 
                     type="text" 
@@ -81,25 +85,75 @@ const RegisterForm = () => {
             </S.InputGroup>
             <S.InputGroup>
                 <label htmlFor="">Password</label>
-                <input 
-                    type="password"
-                    name="password"
-                    id="password"
-                    value={form.values.password}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                />
+                <S.PasswordWrapper>
+                    <input 
+                        type={
+                            showPassword
+                                ? 'text'
+                                : 'password'
+                        }
+                        name="password"
+                        id="password"
+                        value={form.values.password}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                    />
+                    <S.TogglePasswordBtn
+                        type="button"
+                        onClick={() =>
+                            setShowPassword(!showPassword)
+                        }
+                    >
+                        <i
+                            className={
+                                showPassword
+                                    ? 'bi bi-eye-slash-fill'
+                                    : 'bi bi-eye-fill'
+                            }
+                        />
+                    </S.TogglePasswordBtn>
+                </S.PasswordWrapper>
+                {checkInputHasError('password') && (
+                    <S.InputError>
+                        {form.errors.password}
+                    </S.InputError>
+                )}
             </S.InputGroup>
             <S.InputGroup>
                 <label htmlFor="">Confirm password</label>
-                <input 
-                    type="password"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    value={form.values.confirmPassword}
-                    onChange={form.handleChange}
-                    onBlur={form.handleBlur}
-                />
+                <S.PasswordWrapper>
+                    <input 
+                        type={
+                            showConfirmPassword
+                                ? 'text'
+                                : 'password'
+                        }
+                        name="confirmPassword"
+                        id="confirmPassword"
+                        value={form.values.confirmPassword}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
+                    />
+                    <S.TogglePasswordBtn
+                        type="button"
+                        onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                        }
+                    >
+                        <i
+                            className={
+                                showConfirmPassword
+                                    ? 'bi bi-eye-slash-fill'
+                                    : 'bi bi-eye-fill'
+                            }
+                        />
+                    </S.TogglePasswordBtn>
+                </S.PasswordWrapper>
+                {checkInputHasError('confirmPassword') && (
+                    <S.InputError>
+                        {form.errors.confirmPassword}
+                    </S.InputError>
+                )}
             </S.InputGroup>
             <Btn 
             className="positive" 
