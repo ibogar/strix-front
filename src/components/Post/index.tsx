@@ -21,9 +21,9 @@ const Post = () => {
             </S.ActionsContainer>
 
             <S.BtnContainer>
-                <Btn className="positive">
+                {/* <Btn className="positive">
                     Edit
-                </Btn>
+                </Btn> */}
 
                 <Btn className="danger">
                     Delete
