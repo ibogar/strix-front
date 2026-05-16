@@ -1,15 +1,16 @@
 import Header from '../../components/Header'
+import ProfileForm from '../../components/forms/ProfileForm'
 
 import * as P from '../../components/Sidebar/styles'
-import { Btn, PageTitle } from '../../styles'
+import { PageTitle } from '../../styles'
 import * as S from './styles'
 
 
 import { useLocation } from 'react-router-dom'
 
 const EditProfile = () => {
-    const location = useLocation()
-    const path = location.pathname
+    const location = useLocation();
+    const path = location.pathname;
 
     return (
         <div className="container">
@@ -40,64 +41,7 @@ const EditProfile = () => {
                     </P.ProfileDescription>
                 </S.ProfileSection>
 
-                <S.Form>
-                    <S.InputGroup>
-                        <label htmlFor="name">
-                            Name
-                        </label>
-
-                        <input
-                            id="name"
-                            type="text"
-                            placeholder="Your name"
-                        />
-                    </S.InputGroup>
-
-                    <S.InputGroup>
-                        <label htmlFor="username">
-                            Username
-                        </label>
-
-                        <input
-                            id="username"
-                            type="text"
-                            placeholder="#username"
-                        />
-                    </S.InputGroup>
-
-                    <S.InputGroup>
-                        <label htmlFor="bio">
-                            Bio
-                        </label>
-
-                        <textarea
-                            id="bio"
-                            placeholder="Tell people about yourself"
-                        />
-                    </S.InputGroup>
-
-                    <S.InputGroup>
-                        <label htmlFor="image">
-                            Profile image URL
-                        </label>
-
-                        <input
-                            id="image"
-                            type="text"
-                            placeholder="https://..."
-                        />
-                    </S.InputGroup>
-
-                    <S.ButtonContainer>
-                        <Btn className="positive">
-                            Save changes
-                        </Btn>
-
-                        <Btn className="danger">
-                            Cancel
-                        </Btn>
-                    </S.ButtonContainer>
-                </S.Form>
+                <ProfileForm />
             </S.EditProfileContainer>
         </div>
     )
