@@ -82,6 +82,11 @@ const RegisterForm = () => {
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
                 />
+                {checkInputHasError('username') && (
+                    <S.InputError>
+                        {form.errors.username}
+                    </S.InputError>
+                )}
             </S.InputGroup>
             <S.InputGroup>
                 <label htmlFor="">Password</label>
