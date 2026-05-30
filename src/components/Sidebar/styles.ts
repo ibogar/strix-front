@@ -72,3 +72,16 @@ export const EditBtn = styled(Link)`
     text-decoration: none;
     color: ${colors.jetBlack};
 `
+
+export const LogoutBtn = styled.button`
+    display: block;
+    padding: 6px;
+    margin: 8px;
+    background-color: ${colors.scarletFire};
+    border: 1px solid ${colors.darkSlateGrey}33;
+    box-shadow: 2px 2px 0 ${colors.darkSlateGrey};
+    font-size: 12px;
+    font-weight: bold;
+    color: ${colors.jetBlack};
+    cursor: pointer;
+`

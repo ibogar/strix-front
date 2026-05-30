@@ -5,6 +5,12 @@ const Sidebar = () => {
     const location = useLocation();
     const path = location.pathname;
 
+    const logout = () => {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        window.location.reload()
+    }
+
     return (
         <S.SidebarContainer>
             <S.ProfilePic $path={path} src="https://placehold.co/320" alt="Profile picture"></S.ProfilePic>
@@ -17,6 +23,7 @@ const Sidebar = () => {
                 <S.SidebarLink to={"/followers"}>Followers</S.SidebarLink>
             </S.SidebarLinksContainer>
             <S.EditBtn to={"/edit_profile"}>Edit profile</S.EditBtn>
+            <S.LogoutBtn onClick={logout}>Logout</S.LogoutBtn>
         </S.SidebarContainer>
     )
 }

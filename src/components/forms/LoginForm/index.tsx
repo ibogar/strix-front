@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import * as S from '../styles'
 import { Btn } from '../../../styles'
+import { useLoginMutation } from '../../../services/api'
 
 const LoginForm = () => {
+    const navigate = useNavigate()
     const [ showPassword, setShowPassword ] = useState(false)
+    const [ login ] = useLoginMutation()
 
     const form = useFormik({
         initialValues: {
@@ -21,8 +24,20 @@ const LoginForm = () => {
             password: Yup.string()
                 .required('Password is required'),
         }),
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: async (values) => {
+            try {
+                const response = await login({
+                    email: values.email,
+                    password: values.password
+                }).unwrap()
+
+                localStorage.setItem('accessToken', response.access)
+                localStorage.setItem('refreshToken', response.refresh)
+
+                navigate('/')
+            } catch (error) {
+                console.log(error)
+            }
         }
     })
 
