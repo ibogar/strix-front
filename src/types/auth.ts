@@ -12,8 +12,18 @@ export interface RegisterResponse {
 }
 
 export interface LoginPayload {
-    username: string
+    email: string
     password: string
+}
+
+export interface LoginResponse {
+    refresh: string
+    access: string
+}
+
+export interface RefreshResponse {
+    refresh: string
+    access: string
 }
 
 export interface EditProfilePayload {
