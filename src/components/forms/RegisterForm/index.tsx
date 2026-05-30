@@ -1,31 +1,44 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import * as S from '../styles'
 import { Btn } from '../../../styles'
+import { useRegisterMutation } from '../../../services/api'
 
 const RegisterForm = () => {
+    const navigate = useNavigate()
     const [ showPassword, setShowPassword ] = useState(false)
     const [ showConfirmPassword, setShowConfirmPassword ] = useState(false)
+    const [ register ] = useRegisterMutation()
 
     const form = useFormik({
         initialValues: {
+            fullName: '',
             email: '',
             username: '',
             password: '',
             confirmPassword: ''
         },
         validationSchema: Yup.object({
+            fullName: Yup.string()
+                .min(3, 'Name too short')
+                .max(50, 'Name too long')
+                .matches(
+                    /^[a-zA-Z ]+$/,
+                    'Only letters allowed'
+                )
+                .required('Name is required'),
             email: Yup.string()
                 .email('Invalid e-mail')
                 .required('E-mail is required'),
             username: Yup.string()
                 .min(3, 'Username too short')
-                .max(20, 'Username too long')
+                .max(30, 'Username too long')
                 .matches(
-                    /^[a-zA-Z0-9_]+$/,
-                    'Only letters, numbers and underscores'
+                    /^[a-z0-9_]+$/,
+                    'Only lowercase letters, numbers and underscores'
                 )
                 .required('Username is required'),
             password: Yup.string()
@@ -42,8 +55,19 @@ const RegisterForm = () => {
                 )
                 .required('Please confirm your password'),
         }),
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: async (values) => {
+            try {
+                await register({
+                    full_name: values.fullName.trim(),
+                    email: values.email.trim().toLowerCase(),
+                    username: values.username.trim(),
+                    password: values.password.trim()
+                }).unwrap()
+
+                navigate('/login')
+            } catch (error) {
+                console.log(error)
+            }
         }
     })
 
@@ -57,7 +81,24 @@ const RegisterForm = () => {
     return (
         <S.FormContainer onSubmit={form.handleSubmit}>
             <S.InputGroup>
-                <label htmlFor="">E-mail</label>
+                <S.Label htmlFor="fullName">Name</S.Label>
+                <input 
+                    type="text" 
+                    name="fullName" 
+                    id="fullName" 
+                    value={form.values.fullName}
+                    onChange={form.handleChange}
+                    onBlur={form.handleBlur}
+                    placeholder="Your full name here"
+                />
+                {checkInputHasError('fullName') && (
+                    <S.InputError>
+                        {form.errors.fullName}
+                    </S.InputError>
+                )}
+            </S.InputGroup>
+            <S.InputGroup>
+                <S.Label htmlFor="email">E-mail</S.Label>
                 <input 
                     type="email" 
                     name="email" 
@@ -65,6 +106,7 @@ const RegisterForm = () => {
                     value={form.values.email}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    placeholder="example@example.com"
                 />
                 {checkInputHasError('email') && (
                     <S.InputError>
@@ -73,7 +115,7 @@ const RegisterForm = () => {
                 )}
             </S.InputGroup>
             <S.InputGroup>
-                <label htmlFor="username">Username</label>
+                <S.Label htmlFor="username">Username</S.Label>
                 <input 
                     type="text" 
                     name="username" 
@@ -81,6 +123,7 @@ const RegisterForm = () => {
                     value={form.values.username}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
+                    placeholder="#example"
                 />
                 {checkInputHasError('username') && (
                     <S.InputError>
@@ -89,7 +132,7 @@ const RegisterForm = () => {
                 )}
             </S.InputGroup>
             <S.InputGroup>
-                <label htmlFor="">Password</label>
+                <S.Label htmlFor="password">Password</S.Label>
                 <S.PasswordWrapper>
                     <input 
                         type={
@@ -125,7 +168,7 @@ const RegisterForm = () => {
                 )}
             </S.InputGroup>
             <S.InputGroup>
-                <label htmlFor="">Confirm password</label>
+                <S.Label htmlFor="confirmPassword">Confirm password</S.Label>
                 <S.PasswordWrapper>
                     <input 
                         type={
