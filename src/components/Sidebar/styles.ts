@@ -18,8 +18,8 @@ export const SidebarContainer = styled.aside`
     box-shadow: 2px 2px 0 ${colors.cerulean};
 `
 
-export const ProfilePic = styled.img<PicProps>`
-    width: ${({$path}) => $path === '/edit_profile' ? '320px' : '100%'};
+export const ProfilePic = styled.img`
+    width: 100%;
     box-shadow: 2px 2px 0 ${colors.darkSlateGrey}CC;
     border-radius: 50%;
     margin: 8px 0;
@@ -73,15 +73,25 @@ export const EditBtn = styled(Link)`
     color: ${colors.jetBlack};
 `
 
-export const LogoutBtn = styled.button`
+export const SidebarBtn = styled.button`
     display: block;
     padding: 6px;
     margin: 8px;
-    background-color: ${colors.scarletFire};
-    border: 1px solid ${colors.darkSlateGrey}33;
-    box-shadow: 2px 2px 0 ${colors.darkSlateGrey};
     font-size: 12px;
     font-weight: bold;
-    color: ${colors.jetBlack};
     cursor: pointer;
+
+    &.negative {
+        background-color: ${colors.scarletFire};
+        border: 1px solid ${colors.darkSlateGrey}33;
+        box-shadow: 2px 2px 0 ${colors.darkSlateGrey};
+        color: ${colors.jetBlack};
+    }
+
+    &.positive {
+        background-color: ${colors.darkSlateGrey};
+        border: 1px solid ${colors.cerulean}33;
+        box-shadow: 2px 2px 0 ${colors.cerulean};
+        color: ${colors.paleSky};
+    }
 `

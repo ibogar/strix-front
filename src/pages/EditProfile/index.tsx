@@ -1,16 +1,11 @@
 import Header from '../../components/Header'
-import ProfileForm from '../../components/forms/ProfileForm'
+import EditProfileForm from '../../components/forms/EditProfileForm'
 
-import * as P from '../../components/Sidebar/styles'
 import { PageTitle } from '../../styles'
 import * as S from './styles'
 
 
-import { useLocation } from 'react-router-dom'
-
 const EditProfile = () => {
-    const location = useLocation();
-    const path = location.pathname;
 
     return (
         <div className="container">
@@ -22,26 +17,25 @@ const EditProfile = () => {
                 </PageTitle>
 
                 <S.ProfileSection>
-                    <P.ProfilePic
-                        $path={path}
+                    <S.ProfilePic
                         src="https://placehold.co/320"
                         alt="Profile picture"
                     />
 
-                    <P.Name>
+                    <S.Name>
                         Iuri Guilherme Bogar Portilho
-                    </P.Name>
+                    </S.Name>
 
-                    <P.Username>
+                    <S.Username>
                         #ibogar
-                    </P.Username>
+                    </S.Username>
 
-                    <P.ProfileDescription>
+                    <S.ProfileDescription>
                         Oi, eu sou o Iuri
-                    </P.ProfileDescription>
+                    </S.ProfileDescription>
                 </S.ProfileSection>
 
-                <ProfileForm />
+                <EditProfileForm />
             </S.EditProfileContainer>
         </div>
     )
