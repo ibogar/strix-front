@@ -6,7 +6,7 @@ const Post = () => {
         <S.PostContainer>
             <S.User>Iuri Guilherme Bogar Portilho</S.User>
             <S.Username>#ibogar</S.Username>
-            <S.Content> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, soluta reiciendis accusamus animi officiis, vel optio ipsam possimus</S.Content>
+            <S.Content></S.Content>
             <S.Footer>
             <S.ActionsContainer>
                 <S.ActionBtn className="like">
