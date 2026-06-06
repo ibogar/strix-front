@@ -12,7 +12,7 @@ const Home = () => {
             <Header />
             <Content>
                 <Sidebar />
-                <Feed />
+                <Feed fullName=''/>
             </Content>
         </div>
     )

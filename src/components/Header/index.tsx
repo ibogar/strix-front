@@ -31,7 +31,7 @@ const Header = () => {
                             <i className="bi bi-house-door-fill"></i>
                             <h2>Home</h2>
                         </S.NavLink>
-                        <S.NavLink to={"/profile"}>
+                        <S.NavLink to={"/my_profile"}>
                             <i className="bi bi-person-circle"></i>
                             <h2>Profile</h2>
                         </S.NavLink>

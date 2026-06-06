@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { LoginPayload, LoginResponse, RefreshResponse, RegisterPayload, RegisterResponse } from '../types/auth'
-import type { UserType } from '../types/user'
+import type { LoginPayload, RegisterPayload } from '../types/apiPayloads'
+import type { GetUserResponse, LoggedUserResponse, LoginResponse, RefreshResponse, RegisterResponse } from '../types/apiResponses'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8000/api/',
@@ -77,11 +77,11 @@ const api = createApi({
                 body
             })
         }),
-        getLoggedUser: builder.query<UserType, void>({
-            query: () => 'users/logged_user',
+        getLoggedUser: builder.query<LoggedUserResponse, void>({
+            query: () => 'users/logged_user/',
         }),
-        getUserById: builder.query<UserType, number>({
-            query: (id) => `users/${id}`
+        getUserByUsername: builder.query<GetUserResponse, string>({
+            query: (username) => `users/${username}`
         })
     })
 })
@@ -91,7 +91,7 @@ export const {
     useRegisterMutation,
     useLoginMutation, 
     useGetLoggedUserQuery,
-    useGetUserByIdQuery
+    useGetUserByUsernameQuery
 } = api
 
 export default api

@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import Profile from '../pages/Profile'
+import MyProfile from '../pages/MyProfile'
 import FollowersPage from '../pages/FollowersPage'
 import Following from '../pages/Following'
 import EditProfile from '../pages/EditProfile'
@@ -37,10 +38,18 @@ const MyRoutes = () => (
         } 
     />
     <Route 
-      path="/profile" 
+      path="/profile/:username" 
       element={
         <ProtectedRoute>
           <Profile />
+        </ProtectedRoute>
+        } 
+    />
+    <Route 
+      path="/my_profile" 
+      element={
+        <ProtectedRoute>
+          <MyProfile />
         </ProtectedRoute>
         } 
     />

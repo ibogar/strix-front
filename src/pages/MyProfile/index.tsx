@@ -1,20 +1,20 @@
-import { useParams } from 'react-router-dom'
-
 import Sidebar from '../../components/Sidebar'
 import Header from '../../components/Header'
 import Feed from '../../components/Feed'
 
 import { Content } from '../../styles'
-
-import { useGetUserByUsernameQuery } from '../../services/api'
-
+import { useGetLoggedUserQuery, useGetUserByUsernameQuery } from '../../services/api'
 
 
 
 
-const Profile = () => {
-    const { username } = useParams()
-    const { data: userByUsername } = useGetUserByUsernameQuery(username!)
+
+const MyProfile = () => {
+    const { data: loggedUser } = useGetLoggedUserQuery()
+    const { data: userByUsername } = useGetUserByUsernameQuery(loggedUser?.username ?? '',
+        {
+            skip: !loggedUser
+        })
     const fullName = userByUsername?.full_name ?? ''
 
     return (
@@ -22,10 +22,10 @@ const Profile = () => {
             <Header />
             <Content>
                 <Sidebar />
-                <Feed fullName={fullName}/>
+                <Feed fullName={fullName} />
             </Content>
         </div>
     ) 
 }
 
-export default Profile
+export default MyProfile
