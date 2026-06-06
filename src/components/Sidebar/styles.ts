@@ -3,10 +3,6 @@ import styled from 'styled-components'
 
 import { colors, fonts } from '../../styles'
 
-type PicProps = {
-    $path: string
-}
-
 export const SidebarContainer = styled.aside`
     position: sticky;
     top: 24px;

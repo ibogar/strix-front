@@ -31,14 +31,14 @@ const Sidebar = ({ profilePic, fullName, username, bio, followingCount, follower
                 <S.SidebarLink to={"/following"}>Following {followingCount}</S.SidebarLink>
                 <S.SidebarLink to={"/followers"}>Followers {followersCount}</S.SidebarLink>
             </S.SidebarLinksContainer>
-            {(path === '/' || path === '/my_profile') ? 
+            {path.startsWith('/profile') ? 
                 (
+                    <S.SidebarBtn className="positive">Follow</S.SidebarBtn>
+                ) : (
                     <>
                         <S.EditBtn to={"/edit_profile"}>Edit profile</S.EditBtn>
                         <S.SidebarBtn className="negative" onClick={logout}>Logout</S.SidebarBtn>
                     </>
-                ) : (
-                    <S.SidebarBtn className="positive">Follow</S.SidebarBtn>
                 )
             }
         </S.SidebarContainer>
