@@ -10,11 +10,17 @@ export interface LoginPayload {
     password: string
 }
 
+interface EditFormData {
+    fullName: string
+    username: string
+    bio: string
+    profilePicture: File | null
+    currentPassword: string
+    newPassword: string
+    confirmNewPassword: string
+}
+
 export interface EditProfilePayload {
-    full_name?: string
-    username?: string
-    bio?: string
-    image?: File
-    current_password?: string
-    new_password?: string
+    username: string
+    data: EditFormData
 }

@@ -1,31 +1,37 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import * as S from '../styles'
 
 import { Btn } from '../../../styles'
+import { useEditProfileMutation } from '../../../services/api'
 
-const EditProfileForm = () => {
+interface Props {
+    username: string
+}
+
+const EditProfileForm = ({ username: usernameProp }: Props) => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
-
     const [showNewPassword, setShowNewPassword] = useState(false)
-
     const [ showConfirmPassword, setShowConfirmPassword ] = useState(false)
+    const [ editProfile ] = useEditProfileMutation()
+    const navigate = useNavigate()
 
     const form = useFormik({
         initialValues: {
-            name: '',
+            fullName: '',
             username: '',
             bio: '',
-            image: null,
+            profilePicture: null,
             currentPassword: '',
             newPassword: '',
             confirmNewPassword: ''
         },
 
         validationSchema: Yup.object({
-            name: Yup.string()
+            fullName: Yup.string()
                 .min(3, 'Name is too short')
                 .max(60, 'Name is too long'),
 
@@ -40,7 +46,8 @@ const EditProfileForm = () => {
             bio: Yup.string()
                 .max(160, 'Bio must have at most 160 characters'),
 
-            image: Yup.mixed<File>()
+            profilePicture: Yup.mixed<File>()
+                .nullable()
                 .test(
                     'fileSize',
                     'Image is too large',
@@ -97,21 +104,18 @@ const EditProfileForm = () => {
                             ),
                 }),
         }),
+        onSubmit: async (values) => {
+            try {
+                await editProfile({
+                    username: usernameProp, 
+                    data: values
+                }).unwrap()
 
-        onSubmit: (values) => {
-            console.log(values)
+                navigate('/')
+            } catch (error) {
+                console.log(error)
+            }
         }
-        /* onSubmit: (values) => {
-            const payload: Record<string, string> = {}
-
-            Object.entries(values).forEach(([key, value]) => {
-                if (value.trim() !== '') {
-                    payload[key] = value
-                }
-            })
-
-            console.log(payload)
-        } */
     })
 
     const checkInputHasError = (fieldName: keyof typeof form.values) => {
@@ -124,23 +128,23 @@ const EditProfileForm = () => {
     return (
         <S.FormContainer onSubmit={form.handleSubmit}>
             <S.InputGroup>
-                <S.Label htmlFor="name">
+                <S.Label htmlFor="fullName">
                     Name
                 </S.Label>
 
                 <input
-                    id="name"
-                    name="name"
+                    id="fullName"
+                    name="fullName"
                     type="text"
                     placeholder="Your name"
-                    value={form.values.name}
+                    value={form.values.fullName}
                     onChange={form.handleChange}
                     onBlur={form.handleBlur}
                 />
 
-                {checkInputHasError('name') && (
+                {checkInputHasError('fullName') && (
                     <S.InputError>
-                        {form.errors.name}
+                        {form.errors.fullName}
                     </S.InputError>
                 )}
             </S.InputGroup>
@@ -189,34 +193,34 @@ const EditProfileForm = () => {
             </S.InputGroup>
 
             <S.InputGroup>
-                <S.Label htmlFor="image">
+                <S.Label htmlFor="profilePicture">
                     Profile image
                 </S.Label>
 
-                <S.FileInputLabel htmlFor="image">
+                <S.FileInputLabel htmlFor="profilePicture">
                     Upload image
                 </S.FileInputLabel>
 
                 <S.Filename>
-                    {form.values.image?.name || 'No file selected'}
+                    {form.values.profilePicture?.name || 'No file selected'}
                 </S.Filename>
 
                 <S.FileInput
-                    id="image"
-                    name="image"
+                    id="profilePicture"
+                    name="profilePicture"
                     type="file"
                     accept="image/*"
                     onChange={(event) => {
                         const file =
                             event.currentTarget.files?.[0]
 
-                        form.setFieldValue('image', file)
+                        form.setFieldValue('profilePicture', file)
                     }}
                 />
 
-                {checkInputHasError('image') && (
+                {checkInputHasError('profilePicture') && (
                     <S.InputError>
-                        {form.errors.image}
+                        {form.errors.profilePicture}
                     </S.InputError>
                 )}
             </S.InputGroup>
@@ -367,7 +371,7 @@ const EditProfileForm = () => {
                     className="danger"
                     type="button"
                 >
-                    Cancel
+                    <Link to={'/'}>Cancel</Link>
                 </Btn>
             </S.ButtonContainer>
         </S.FormContainer>

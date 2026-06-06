@@ -85,4 +85,9 @@ export const Btn = styled.button`
     &:hover {
         box-shadow: 4px 4px ${colors.cerulean};
     }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 `

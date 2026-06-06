@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { LoginPayload, RegisterPayload } from '../types/apiPayloads'
+import type { EditProfilePayload, LoginPayload, RegisterPayload } from '../types/apiPayloads'
 import type { GetUserResponse, LoggedUserResponse, LoginResponse, RefreshResponse, RegisterResponse } from '../types/apiResponses'
 
 const baseQuery = fetchBaseQuery({
@@ -62,6 +62,7 @@ const baseQueryWithReauth = async (
 
 const api = createApi({
     baseQuery: baseQueryWithReauth,
+    tagTypes: ['User'],
     endpoints: (builder) => ({
         register: builder.mutation<RegisterResponse, RegisterPayload>({
             query: (body) => ({
@@ -69,6 +70,34 @@ const api = createApi({
                 method: 'POST',
                 body
                 })
+        }),
+        editProfile: builder.mutation<GetUserResponse, EditProfilePayload>({
+            query: ({ username, data }) => {
+                const formData = new FormData()
+
+                Object.entries(data).forEach(([key, value]) => {
+                    if (value !== null && value !== '') {
+                        const apiFieldMap: Record<string, string> = {
+                            fullName: 'full_name',
+                            profilePicture: 'profile_picture',
+                            currentPassword: 'current_password',
+                            newPassword: 'new_password'
+                        }
+
+                        formData.append(
+                            apiFieldMap[key] ?? key,
+                            value
+                        )
+                    }
+                })
+
+                return {
+                    url: `users/${username}/`,
+                    method: 'PATCH',
+                    body: formData
+                }
+            },
+            invalidatesTags: ['User']
         }),
         login: builder.mutation<LoginResponse, LoginPayload>({
             query: (body) => ({
@@ -78,10 +107,11 @@ const api = createApi({
             })
         }),
         getLoggedUser: builder.query<LoggedUserResponse, void>({
-            query: () => 'users/logged_user/',
+            query: () => 'users/logged_user/'
         }),
         getUserByUsername: builder.query<GetUserResponse, string>({
-            query: (username) => `users/${username}`
+            query: (username) => `users/${username}/`,
+            providesTags: ['User']
         })
     })
 })
@@ -89,6 +119,7 @@ const api = createApi({
 
 export const { 
     useRegisterMutation,
+    useEditProfileMutation,
     useLoginMutation, 
     useGetLoggedUserQuery,
     useGetUserByUsernameQuery
