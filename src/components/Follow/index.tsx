@@ -1,8 +1,8 @@
 
-import { useLocation } from "react-router-dom"
-import * as S from "./styles"
-import FollowUser from "../FollowUser";
-import { PageTitle } from "../../styles";
+import { useLocation } from 'react-router-dom'
+import * as S from './styles'
+import UserComponent from '../UserComponent'
+import { PageTitle } from '../../styles'
 
 
 const Follow = () => {
@@ -16,11 +16,10 @@ const Follow = () => {
                 <PageTitle>Following</PageTitle>
             )}
 
-            <FollowUser />
-            <FollowUser />
-            <FollowUser />
-            <FollowUser />
-            <FollowUser />
+            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
+            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
+            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
+            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
             
         </S.FollowContainer>
     )
