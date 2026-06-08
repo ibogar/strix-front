@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 
+import ProtectedRoute from './ProtectedRoute'
+import PublicRoute from './PublicRoute'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
@@ -8,8 +10,7 @@ import MyProfile from '../pages/MyProfile'
 import FollowersPage from '../pages/FollowersPage'
 import Following from '../pages/Following'
 import EditProfile from '../pages/EditProfile'
-import ProtectedRoute from './ProtectedRoute'
-import PublicRoute from './PublicRoute'
+import SearchUsers from '../pages/SearchUsers'
 
 const MyRoutes = () => (
   <Routes>
@@ -74,6 +75,14 @@ const MyRoutes = () => (
       element={
         <ProtectedRoute>
           <EditProfile />
+        </ProtectedRoute>
+        } 
+    />
+    <Route 
+      path="/search" 
+      element={
+        <ProtectedRoute>
+          <SearchUsers />
         </ProtectedRoute>
         } 
     />

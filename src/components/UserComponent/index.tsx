@@ -2,17 +2,16 @@ import { useLocation } from 'react-router-dom'
 import * as S from './styles'
 
 interface Props {
-    id: number
     profilePic: string
     fullName: string
     username: string
 }
 
-const UserComponent = ({ id, profilePic, fullName, username }: Props) => {
+const UserComponent = ({ profilePic, fullName, username }: Props) => {
     const location = useLocation();
 
     return (
-        <S.FolUserContainer key={id}>
+        <S.FolUserContainer>
             <S.FolUserLink to={`/profile/${username}`}>
                 <S.FolUserImg src={profilePic ?? "https://placehold.co/64"} alt="User photo" />
                 <S.FolUser>{fullName}</S.FolUser>

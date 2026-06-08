@@ -16,7 +16,7 @@ export const SidebarContainer = styled.aside`
 
 export const ProfilePic = styled.img`
     width: 100%;
-    height: 232px;
+    aspect-ratio: 1 / 1;
     box-shadow: 2px 2px 0 ${colors.darkSlateGrey}CC;
     border-radius: 50%;
     margin: 8px 0;

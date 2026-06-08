@@ -16,10 +16,10 @@ const Follow = () => {
                 <PageTitle>Following</PageTitle>
             )}
 
-            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
-            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
-            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
-            <UserComponent id={0} profilePic={''} fullName={''} username={''} />
+            <UserComponent profilePic={''} fullName={''} username={''} />
+            <UserComponent profilePic={''} fullName={''} username={''} />
+            <UserComponent profilePic={''} fullName={''} username={''} />
+            <UserComponent profilePic={''} fullName={''} username={''} />
             
         </S.FollowContainer>
     )

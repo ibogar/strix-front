@@ -112,6 +112,9 @@ const api = createApi({
         getUserByUsername: builder.query<GetUserResponse, string>({
             query: (username) => `users/${username}/`,
             providesTags: ['User']
+        }),
+        getSearchUsers: builder.query<GetUserResponse[], string>({
+            query: (searchQuery) => `users/?search=${searchQuery}`
         })
     })
 })
@@ -122,7 +125,8 @@ export const {
     useEditProfileMutation,
     useLoginMutation, 
     useGetLoggedUserQuery,
-    useGetUserByUsernameQuery
+    useGetUserByUsernameQuery,
+    useGetSearchUsersQuery
 } = api
 
 export default api

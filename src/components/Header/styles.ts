@@ -13,6 +13,7 @@ export const HeaderContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 `
 
 export const Logo = styled(Link)<HeaderProps>`
@@ -59,5 +60,49 @@ export const NavLink = styled(Link)`
     i {
         font-size: 24px;
         margin-right: 4px;
+    }
+`
+
+export const SearchContainer = styled.div`
+    margin-top: 24px;
+    position: relative;
+`
+
+export const DropdownContainer = styled.div`
+    width: 240px;
+    border: 1px solid ${colors.jetBlack};
+    border-radius: 2px;
+    position: absolute;
+    background-color: ${colors.snow};
+`
+
+export const DpdUser = styled(Link)`
+    display: flex;
+    text-decoration: none;
+    color: ${colors.jetBlack};
+    box-shadow: 2px 2px 0 ${colors.darkSlateGrey}CC;
+    align-items: center;
+
+    img {
+        width: 60px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        box-shadow: 2px 2px 0 ${colors.darkSlateGrey}CC;
+        margin: 6px;
+    }
+
+    div {
+        margin: 6px;
+        flex-direction: column;
+    }
+
+    h4 {
+        font-size: 16px;
+    }
+        
+    p {
+        font-size: 12px;
+        color: ${colors.jetBlack}AA;
+        margin-top: 4px;
     }
 `
