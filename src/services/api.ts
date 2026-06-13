@@ -114,7 +114,22 @@ const api = createApi({
             providesTags: ['User']
         }),
         getSearchUsers: builder.query<GetUserResponse[], string>({
-            query: (searchQuery) => `users/?search=${searchQuery}`
+            query: (searchQuery) => `users/?search=${searchQuery}`,
+            providesTags: ['User']
+        }),
+        followUser: builder.mutation<FollowUserResponse, string>({
+            query: (username) => ({
+                url: `users/${username}/follow/`,
+                method: 'POST'
+            }),
+            invalidatesTags: ['User']
+        }),
+        unfollowUser: builder.mutation<FollowUserResponse, string>({
+            query: (username) => ({
+                url: `users/${username}/unfollow/`,
+                method: 'POST'
+            }),
+            invalidatesTags: ['User']
         })
     })
 })
@@ -126,7 +141,9 @@ export const {
     useLoginMutation, 
     useGetLoggedUserQuery,
     useGetUserByUsernameQuery,
-    useGetSearchUsersQuery
+    useGetSearchUsersQuery,
+    useFollowUserMutation,
+    useUnfollowUserMutation
 } = api
 
 export default api

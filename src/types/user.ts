@@ -1,8 +1,9 @@
 export interface UserPreview {
     id: number
-    fullName: string
     username: string
-    profilePicture: string
+    full_name: string
+    profile_picture: string
+    is_following?: boolean
 }
 
 export interface UserType {

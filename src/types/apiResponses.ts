@@ -1,3 +1,5 @@
+import type { UserPreview } from "./user"
+
 export interface RegisterResponse {
     email: string
     full_name: string
@@ -26,6 +28,13 @@ export interface GetUserResponse {
     username: string
     bio: string
     profile_picture: string
+    following: UserPreview[]
     following_count: number
+    followers:UserPreview[]
     followers_count: number
+    is_following: boolean
+}
+
+export interface FollowUserResponse {
+    message: string
 }

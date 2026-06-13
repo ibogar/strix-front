@@ -11,6 +11,8 @@ import FollowersPage from '../pages/FollowersPage'
 import Following from '../pages/Following'
 import EditProfile from '../pages/EditProfile'
 import SearchUsers from '../pages/SearchUsers'
+import MyFollowersPage from '../pages/MyFollowersPage'
+import MyFollowing from '../pages/MyFollowing'
 
 const MyRoutes = () => (
   <Routes>
@@ -55,7 +57,7 @@ const MyRoutes = () => (
         } 
     />
     <Route 
-      path="/followers" 
+      path="/profile/:username/followers" 
       element={
         <ProtectedRoute>
           <FollowersPage />
@@ -63,10 +65,26 @@ const MyRoutes = () => (
         } 
     />
     <Route 
-      path="/following" 
+      path="/followers" 
+      element={
+        <ProtectedRoute>
+          <MyFollowersPage />
+        </ProtectedRoute>
+        } 
+    />
+    <Route 
+      path="/profile/:username/following" 
       element={
         <ProtectedRoute>
           <Following />
+        </ProtectedRoute>
+        } 
+    />
+    <Route 
+      path="/following" 
+      element={
+        <ProtectedRoute>
+          <MyFollowing />
         </ProtectedRoute>
         } 
     />

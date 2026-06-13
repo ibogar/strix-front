@@ -68,6 +68,27 @@ export const SearchContainer = styled.div`
     position: relative;
 `
 
+export const SearchInput = styled.input`
+    border: 1px solid ${colors.darkSlateGrey};
+    border-radius: 5px 0 0 5px;
+    color: ${colors.jetBlack};
+    padding: 5px;
+    margin: 0;
+    width: 240px;
+`
+
+export const SearchBtn = styled.button`
+    background-color: ${colors.darkSlateGrey};
+    border: 1px solid ${colors.darkSlateGrey};
+    border-radius: 0 5px 5px 0;
+    margin: 0;
+    padding: 5px;
+
+    i {
+        color: ${colors.carrotOrange};
+    }
+`
+
 export const DropdownContainer = styled.div`
     width: 240px;
     border: 1px solid ${colors.jetBlack};

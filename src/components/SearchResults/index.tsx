@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom"
 import { PageTitle } from "../../styles"
 import { useGetSearchUsersQuery } from "../../services/api"
-import UserComponent from "../UserComponent"
+import UserCard from "../UserCard"
 
 
 const SearchResults = () => {
@@ -13,14 +13,16 @@ const SearchResults = () => {
         <>
             <PageTitle>Search results</PageTitle>
             {!data || data.length === 0 ? (
-                <div>Didn't find a user</div>
+                <div>Didn't find any user</div>
             ) : (
                 data.map((i) => (
-                <UserComponent 
+                <UserCard 
                     key={i.id}
                     profilePic={i.profile_picture} 
                     fullName={i.full_name} 
-                    username={i.username} />
+                    username={i.username}
+                    isFollowing={i.is_following}
+                />
             )))}
         </>
     )

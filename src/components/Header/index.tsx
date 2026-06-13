@@ -53,10 +53,10 @@ const Header = () => {
                     </S.Logo >
                     <S.SearchContainer>
                         <form onSubmit={handleSearch}>
-                            <input placeholder="Find new friends" onChange={(e) => setSearchQuery(e.target.value)}/>
-                            <button type="submit">
+                            <S.SearchInput placeholder="Find new friends" onChange={(e) => setSearchQuery(e.target.value)}/>
+                            <S.SearchBtn type="submit">
                                 <i className="bi bi-search" />
-                            </button>
+                            </S.SearchBtn>
                         </form>
                         {data && (
                             <S.DropdownContainer>
