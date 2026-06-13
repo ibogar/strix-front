@@ -1,27 +1,25 @@
+import { useParams } from 'react-router-dom'
 import Follow from '../../components/Follow'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
-import { useGetLoggedUserQuery, useGetUserByUsernameQuery } from '../../services/api'
+import { useGetUserByUsernameQuery } from '../../services/api'
 import { Content } from '../../styles'
 
 
 
 
 const FollowersPage = () => {
-    const { data: loggedUser } = useGetLoggedUserQuery()
-        const { data: userByUsername } = 
-            useGetUserByUsernameQuery(
-                loggedUser?.username ?? '',
-                {
-                    skip: !loggedUser
-                })
+    const { username: usernameParam } = useParams()
+    const { data } = useGetUserByUsernameQuery(usernameParam!)
     
-    const profilePic = userByUsername?.profile_picture ?? 'https://placehold.co/320'
-    const fullName = userByUsername?.full_name ?? ''
-    const username = userByUsername?.username ?? ''
-    const bio = userByUsername?.bio ?? ''
-    const followingCount = userByUsername?.following_count ?? 0
-    const followersCount = userByUsername?.followers_count ?? 0
+    const profilePic = data?.profile_picture ?? 'https://placehold.co/320'
+    const fullName = data?.full_name ?? ''
+    const username = data?.username ?? ''
+    const bio = data?.bio ?? ''
+    const followingCount = data?.following_count ?? 0
+    const followers = data?.followers ?? []
+    const followersCount = data?.followers_count ?? 0
+    const isFollowing = data?.is_following ?? false
 
     return (
         <div className="container">
@@ -34,8 +32,9 @@ const FollowersPage = () => {
                     bio={bio}
                     followingCount={followingCount}
                     followersCount={followersCount}
+                    isFollowing={isFollowing}
                 />
-                <Follow />
+                <Follow followersList={followers} />
             </Content>
         </div>
     )

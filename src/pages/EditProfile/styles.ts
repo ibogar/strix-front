@@ -15,6 +15,7 @@ export const ProfileSection = styled.div`
 `
 export const ProfilePic = styled.img`
     width: 320px;
+    height: 320px;
     box-shadow: 2px 2px 0 ${colors.darkSlateGrey}CC;
     border-radius: 50%;
     margin: 8px 0;

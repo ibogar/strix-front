@@ -18,6 +18,7 @@ const Profile = () => {
     const bio = data?.bio ?? ''
     const followingCount = data?.following_count ?? 0
     const followersCount = data?.followers_count ?? 0
+    const isFollowing = data?.is_following ?? false
 
     return (
         <div className="container">
@@ -30,6 +31,7 @@ const Profile = () => {
                     bio={bio}
                     followingCount={followingCount}
                     followersCount={followersCount}
+                    isFollowing={isFollowing}
                 />
                 <Feed fullName={fullName}/>
             </Content>

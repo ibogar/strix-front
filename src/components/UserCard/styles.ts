@@ -47,15 +47,23 @@ export const FolUserName = styled.p`
 
 export const FolUserBtn = styled.button`
     padding: 8px 20px;
-    background-color: ${colors.scarletFire};
     color: ${colors.jetBlack};
-    border: 2px solid ${colors.scarletFire};
     border-radius: 25px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s ease;
 
+    &.negative {
+        background-color: ${colors.scarletFire};
+        border: 2px solid ${colors.scarletFire};
+    }
+    
+    &.positive {
+        background-color: ${colors.carrotOrange};
+        border: 2px solid ${colors.carrotOrange};
+    }
+    
     &:hover {
         box-shadow: 4px 4px 0 ${colors.cerulean};
     }
