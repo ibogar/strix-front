@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../../styles'
+import { Link } from 'react-router-dom'
 
 
 export const PostContainer = styled.div`
@@ -13,19 +14,39 @@ export const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
+export const UserContainer = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+`
+export const UserImg = styled.img`
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 2px 2px 0 ${colors.jetBlack};
+    margin-right: 12px;
+`
+
+export const UserLink = styled(Link)`
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+`
 
 export const User = styled.h5`
     color: ${colors.paleSky};
     font-size: 1.2em;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    margin-right: 6px;
 `
 
 export const Username = styled.p`
     color: ${colors.paleSky}99;
     font-size: 0.9em;
-    margin-bottom: 16px;
 `
+
 
 export const Content = styled.textarea`
     width: 100%;

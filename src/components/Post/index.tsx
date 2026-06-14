@@ -1,12 +1,36 @@
+import { useLocation } from 'react-router-dom'
 import { Btn } from '../../styles'
 import * as S from './styles'
+import { useDeletePostMutation } from '../../services/api'
 
-const Post = () => {
+interface Props {
+    id: number
+    fullName: string
+    username: string
+    content: string
+    profilePic: string
+}
+
+const Post = ({id, fullName, username, content, profilePic}: Props) => {
+    const location = useLocation()
+    const path = location.pathname
+    const [ deletePost ] = useDeletePostMutation()
+
     return (
         <S.PostContainer>
-            <S.User>Iuri Guilherme Bogar Portilho</S.User>
-            <S.Username>#ibogar</S.Username>
-            <S.Content></S.Content>
+            <S.UserContainer>
+                <S.UserImg 
+                    src={profilePic ? 
+                        `http://localhost:8000${profilePic}` : 
+                        "https://placehold.co/64"} 
+                    alt="User photo" 
+                />
+                <S.UserLink to={`/profile/${username}`}>
+                    <S.User>{fullName}</S.User>
+                    <S.Username>#{username}</S.Username>
+                </S.UserLink>
+            </S.UserContainer>
+            <S.Content value={content} readOnly></S.Content>
             <S.Footer>
             <S.ActionsContainer>
                 <S.ActionBtn className="like">
@@ -24,10 +48,14 @@ const Post = () => {
                 {/* <Btn className="positive">
                     Edit
                 </Btn> */}
-
-                <Btn className="danger">
-                    Delete
-                </Btn>
+                {path === '/my_profile' && 
+                    <Btn 
+                        onClick={() => deletePost(id)} 
+                        className="danger"
+                    >
+                        Delete
+                    </Btn>
+                }
             </S.BtnContainer>
         </S.Footer>
         </S.PostContainer>

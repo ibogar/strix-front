@@ -3,7 +3,7 @@ import Header from '../../components/Header'
 import Feed from '../../components/Feed'
 
 import { Content } from '../../styles'
-import { useGetLoggedUserQuery, useGetUserByUsernameQuery } from '../../services/api'
+import { useGetLoggedUserQuery, useGetMyPostsQuery, useGetUserByUsernameQuery } from '../../services/api'
 
 const MyProfile = () => {
     const { data: loggedUser } = useGetLoggedUserQuery()
@@ -21,6 +21,7 @@ const MyProfile = () => {
     const followingCount = userByUsername?.following_count ?? 0
     const followersCount = userByUsername?.followers_count ?? 0
 
+    const {data: myPosts} = useGetMyPostsQuery()
 
     return (
         <div className="container">
@@ -34,7 +35,10 @@ const MyProfile = () => {
                     followingCount={followingCount}
                     followersCount={followersCount}
                 />
-                <Feed fullName={fullName} />
+                <Feed 
+                    fullName={fullName}
+                    posts={myPosts}
+                />
             </Content>
         </div>
     ) 

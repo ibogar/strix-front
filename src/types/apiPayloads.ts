@@ -24,3 +24,7 @@ export interface EditProfilePayload {
     username: string
     data: EditFormData
 }
+
+export interface CreatePostPayload {
+    content: string
+}

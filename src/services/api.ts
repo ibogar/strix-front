@@ -1,6 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { EditProfilePayload, LoginPayload, RegisterPayload } from '../types/apiPayloads'
-import type { GetUserResponse, LoggedUserResponse, LoginResponse, RefreshResponse, RegisterResponse } from '../types/apiResponses'
+import type { 
+    CreatePostPayload,
+    EditProfilePayload, 
+    LoginPayload, 
+    RegisterPayload 
+} from '../types/apiPayloads'
+
+import type { 
+    FollowUserResponse, 
+    GetPostsResponse, 
+    GetUserResponse, 
+    LoggedUserResponse, 
+    LoginResponse, 
+    RefreshResponse, 
+    RegisterResponse 
+} from '../types/apiResponses'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8000/api/',
@@ -62,7 +76,7 @@ const baseQueryWithReauth = async (
 
 const api = createApi({
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['User'],
+    tagTypes: ['User', 'Posts'],
     endpoints: (builder) => ({
         register: builder.mutation<RegisterResponse, RegisterPayload>({
             query: (body) => ({
@@ -130,6 +144,33 @@ const api = createApi({
                 method: 'POST'
             }),
             invalidatesTags: ['User']
+        }),
+        createPost: builder.mutation<GetPostsResponse, CreatePostPayload>({
+            query: (body) => ({
+                url: 'posts/',
+                method: 'POST',
+                body
+                }),
+            invalidatesTags: ['Posts']
+        }),
+        getMyPosts: builder.query<GetPostsResponse[], void>({
+            query: () => 'posts/mine/',
+            providesTags: ['Posts']
+        }),
+        getFeed: builder.query<GetPostsResponse[], void>({
+            query: () => 'posts/feed/',
+            providesTags: ['Posts']
+        }),
+        getUserPosts: builder.query<GetPostsResponse[], string>({
+            query: (username) => `users/${username}/posts/`,
+            providesTags: ['Posts']
+        }),
+        deletePost: builder.mutation<number, number>({
+            query: (id) => ({
+                url: `posts/${id}/`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Posts']
         })
     })
 })
@@ -143,7 +184,12 @@ export const {
     useGetUserByUsernameQuery,
     useGetSearchUsersQuery,
     useFollowUserMutation,
-    useUnfollowUserMutation
+    useUnfollowUserMutation,
+    useCreatePostMutation,
+    useGetMyPostsQuery,
+    useGetFeedQuery,
+    useGetUserPostsQuery,
+    useDeletePostMutation
 } = api
 
 export default api

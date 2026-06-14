@@ -38,3 +38,9 @@ export interface GetUserResponse {
 export interface FollowUserResponse {
     message: string
 }
+
+export interface GetPostsResponse {
+    id: number,
+    author: UserPreview,
+    content: string
+}
