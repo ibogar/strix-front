@@ -1,7 +1,13 @@
 import Feed from '../../components/Feed'
 import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
-import { useGetLoggedUserQuery, useGetUserByUsernameQuery } from '../../services/api'
+
+import { 
+    useGetFeedQuery, 
+    useGetLoggedUserQuery, 
+    useGetUserByUsernameQuery 
+} from '../../services/api'
+
 import { Content } from '../../styles'
 
 const Home = () => {
@@ -20,6 +26,8 @@ const Home = () => {
     const followingCount = userByUsername?.following_count ?? 0
     const followersCount = userByUsername?.followers_count ?? 0
 
+    const { data: getFeed } = useGetFeedQuery()
+
     return (
         <div className="container">
             <Header />
@@ -32,7 +40,10 @@ const Home = () => {
                     followingCount={followingCount}
                     followersCount={followersCount}
                 />
-                <Feed fullName=''/>
+                <Feed 
+                    fullName=''
+                    posts={getFeed}
+                />
             </Content>
         </div>
     )

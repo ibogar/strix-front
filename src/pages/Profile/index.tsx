@@ -6,19 +6,21 @@ import Feed from '../../components/Feed'
 
 import { Content } from '../../styles'
 
-import { useGetUserByUsernameQuery } from '../../services/api'
+import { useGetUserByUsernameQuery, useGetUserPostsQuery } from '../../services/api'
 
 const Profile = () => {
     const { username: usernameParam } = useParams()
-    const { data } = useGetUserByUsernameQuery(usernameParam!)
+    const { data: user } = useGetUserByUsernameQuery(usernameParam!)
+    const { data: posts} = useGetUserPostsQuery(usernameParam!)
+
     
-    const profilePic = data?.profile_picture ?? 'https://placehold.co/320'
-    const fullName = data?.full_name ?? ''
-    const username = data?.username ?? ''
-    const bio = data?.bio ?? ''
-    const followingCount = data?.following_count ?? 0
-    const followersCount = data?.followers_count ?? 0
-    const isFollowing = data?.is_following ?? false
+    const profilePic = user?.profile_picture ?? 'https://placehold.co/320'
+    const fullName = user?.full_name ?? ''
+    const username = user?.username ?? ''
+    const bio = user?.bio ?? ''
+    const followingCount = user?.following_count ?? 0
+    const followersCount = user?.followers_count ?? 0
+    const isFollowing = user?.is_following ?? false
 
     return (
         <div className="container">
@@ -33,7 +35,10 @@ const Profile = () => {
                     followersCount={followersCount}
                     isFollowing={isFollowing}
                 />
-                <Feed fullName={fullName}/>
+                <Feed 
+                    fullName={fullName}
+                    posts={posts}
+                />
             </Content>
         </div>
     ) 
