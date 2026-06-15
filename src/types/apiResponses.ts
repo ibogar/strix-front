@@ -45,4 +45,11 @@ export interface GetPostsResponse {
     content: string
     likes_count: number
     is_liked: boolean
+    comment_count:number
+}
+
+export interface GetCommentsResponse {
+    id: number
+    author: UserPreview
+    content: string
 }

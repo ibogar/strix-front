@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { 
+    CreateCommentPayload,
     CreatePostPayload,
     EditProfilePayload, 
     LoginPayload, 
@@ -8,6 +9,7 @@ import type {
 
 import type { 
     GenericMessageResponse, 
+    GetCommentsResponse, 
     GetPostsResponse, 
     GetUserResponse, 
     LoggedUserResponse, 
@@ -76,7 +78,7 @@ const baseQueryWithReauth = async (
 
 const api = createApi({
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['User', 'Posts'],
+    tagTypes: ['User', 'Posts', 'Comments'],
     endpoints: (builder) => ({
         register: builder.mutation<RegisterResponse, RegisterPayload>({
             query: (body) => ({
@@ -185,7 +187,21 @@ const api = createApi({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Posts']
-        })
+        }),
+        createComment: builder.mutation<GetCommentsResponse, CreateCommentPayload>({
+            query: ({id, content}) => ({
+                url: `posts/${id}/comment/`,
+                method: 'POST',
+                body: {
+                    content: content
+                }
+            }),
+            invalidatesTags: ['Comments']
+        }),
+        getComments: builder.query<GetCommentsResponse[], number>({
+            query: (id) => `posts/${id}/comments/`,
+            providesTags: ['Comments']
+        }),
     })
 })
 
@@ -205,7 +221,9 @@ export const {
     useGetUserPostsQuery,
     useDeletePostMutation,
     useLikePostMutation,
-    useUnlikePostMutation
+    useUnlikePostMutation,
+    useCreateCommentMutation,
+    useGetCommentsQuery
 } = api
 
 export default api
