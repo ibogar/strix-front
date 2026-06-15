@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { Btn } from '../../styles'
 import * as S from './styles'
-import { useDeletePostMutation } from '../../services/api'
+import { useDeletePostMutation, useLikePostMutation, useUnlikePostMutation } from '../../services/api'
 
 interface Props {
     id: number
@@ -9,12 +9,15 @@ interface Props {
     username: string
     content: string
     profilePic: string
+    isLiked: boolean
 }
 
-const Post = ({id, fullName, username, content, profilePic}: Props) => {
+const Post = ({id, fullName, username, content, profilePic, isLiked}: Props) => {
     const location = useLocation()
     const path = location.pathname
     const [ deletePost ] = useDeletePostMutation()
+    const [ likePost ] = useLikePostMutation()
+    const [ unlikePost ] = useUnlikePostMutation()
 
     return (
         <S.PostContainer>
@@ -32,32 +35,36 @@ const Post = ({id, fullName, username, content, profilePic}: Props) => {
             </S.UserContainer>
             <S.Content value={content} readOnly></S.Content>
             <S.Footer>
-            <S.ActionsContainer>
-                <S.ActionBtn className="like">
-                    <i className="bi bi-heart"></i>
-                    Like
-                </S.ActionBtn>
+                <S.ActionsContainer>
+                    {isLiked ? (
+                        <S.ActionBtn onClick={() => unlikePost(id)} className="like">
+                            <i className="bi bi-heart-fill"></i>
+                            Unlike
+                        </S.ActionBtn>
+                    ) : (
+                        <S.ActionBtn onClick={() => likePost(id)} className="like">
+                            <i className="bi bi-heart"></i>
+                            Like
+                        </S.ActionBtn>
+                    )}
 
-                <S.ActionBtn className="comment">
-                    <i className="bi bi-chat"></i>
-                    Comment
-                </S.ActionBtn>
-            </S.ActionsContainer>
+                    <S.ActionBtn className="comment">
+                        <i className="bi bi-chat"></i>
+                        Comment
+                    </S.ActionBtn>
+                </S.ActionsContainer>
 
-            <S.BtnContainer>
-                {/* <Btn className="positive">
-                    Edit
-                </Btn> */}
-                {path === '/my_profile' && 
-                    <Btn 
-                        onClick={() => deletePost(id)} 
-                        className="danger"
-                    >
-                        Delete
-                    </Btn>
-                }
-            </S.BtnContainer>
-        </S.Footer>
+                <S.BtnContainer>
+                    {path === '/my_profile' && 
+                        <Btn 
+                            onClick={() => deletePost(id)} 
+                            className="danger"
+                        >
+                            Delete
+                        </Btn>
+                    }
+                </S.BtnContainer>
+            </S.Footer>
         </S.PostContainer>
     )
 }

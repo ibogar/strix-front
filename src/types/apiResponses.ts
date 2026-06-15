@@ -35,12 +35,14 @@ export interface GetUserResponse {
     is_following: boolean
 }
 
-export interface FollowUserResponse {
+export interface GenericMessageResponse {
     message: string
 }
 
 export interface GetPostsResponse {
-    id: number,
-    author: UserPreview,
+    id: number
+    author: UserPreview
     content: string
+    likes_count: number
+    is_liked: boolean
 }

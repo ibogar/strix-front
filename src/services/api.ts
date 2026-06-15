@@ -7,7 +7,7 @@ import type {
 } from '../types/apiPayloads'
 
 import type { 
-    FollowUserResponse, 
+    GenericMessageResponse, 
     GetPostsResponse, 
     GetUserResponse, 
     LoggedUserResponse, 
@@ -131,14 +131,14 @@ const api = createApi({
             query: (searchQuery) => `users/?search=${searchQuery}`,
             providesTags: ['User']
         }),
-        followUser: builder.mutation<FollowUserResponse, string>({
+        followUser: builder.mutation<GenericMessageResponse, string>({
             query: (username) => ({
                 url: `users/${username}/follow/`,
                 method: 'POST'
             }),
             invalidatesTags: ['User']
         }),
-        unfollowUser: builder.mutation<FollowUserResponse, string>({
+        unfollowUser: builder.mutation<GenericMessageResponse, string>({
             query: (username) => ({
                 url: `users/${username}/unfollow/`,
                 method: 'POST'
@@ -171,6 +171,20 @@ const api = createApi({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Posts']
+        }),
+        likePost: builder.mutation<GenericMessageResponse, number>({
+            query: (id) => ({
+                url: `posts/${id}/like/`,
+                method: 'POST'
+            }),
+            invalidatesTags: ['Posts']
+        }),
+        unlikePost: builder.mutation<GenericMessageResponse, number>({
+            query: (id) => ({
+                url: `posts/${id}/unlike/`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Posts']
         })
     })
 })
@@ -189,7 +203,9 @@ export const {
     useGetMyPostsQuery,
     useGetFeedQuery,
     useGetUserPostsQuery,
-    useDeletePostMutation
+    useDeletePostMutation,
+    useLikePostMutation,
+    useUnlikePostMutation
 } = api
 
 export default api
