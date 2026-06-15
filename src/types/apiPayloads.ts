@@ -28,3 +28,8 @@ export interface EditProfilePayload {
 export interface CreatePostPayload {
     content: string
 }
+
+export interface CreateCommentPayload {
+    id: number
+    content: string
+}

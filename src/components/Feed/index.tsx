@@ -32,6 +32,8 @@ const Feed = ({ fullName, posts }: Props) => {
                         username={post.author.username}
                         content={post.content}
                         profilePic={post.author.profile_picture}
+                        isLiked={post.is_liked}
+                        commentCount={post.comment_count}
                     />
                 ))}
             </S.FeedContainer>

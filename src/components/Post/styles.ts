@@ -109,3 +109,11 @@ export const BtnContainer = styled.div`
     gap: 8px;
     align-self: flex-end;
 `
+export const AllCommentsContainer = styled.div`
+    transform: scale(0.9);
+    transform-origin: center center;
+`
+export const CommentContainer = styled.div`
+    border-top: 1px solid ${colors.paleSky};
+    padding-top: 16px;
+`

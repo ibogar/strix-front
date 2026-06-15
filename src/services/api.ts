@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { 
+    CreateCommentPayload,
     CreatePostPayload,
     EditProfilePayload, 
     LoginPayload, 
@@ -7,7 +8,8 @@ import type {
 } from '../types/apiPayloads'
 
 import type { 
-    FollowUserResponse, 
+    GenericMessageResponse, 
+    GetCommentsResponse, 
     GetPostsResponse, 
     GetUserResponse, 
     LoggedUserResponse, 
@@ -76,7 +78,7 @@ const baseQueryWithReauth = async (
 
 const api = createApi({
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['User', 'Posts'],
+    tagTypes: ['User', 'Posts', 'Comments'],
     endpoints: (builder) => ({
         register: builder.mutation<RegisterResponse, RegisterPayload>({
             query: (body) => ({
@@ -131,14 +133,14 @@ const api = createApi({
             query: (searchQuery) => `users/?search=${searchQuery}`,
             providesTags: ['User']
         }),
-        followUser: builder.mutation<FollowUserResponse, string>({
+        followUser: builder.mutation<GenericMessageResponse, string>({
             query: (username) => ({
                 url: `users/${username}/follow/`,
                 method: 'POST'
             }),
             invalidatesTags: ['User']
         }),
-        unfollowUser: builder.mutation<FollowUserResponse, string>({
+        unfollowUser: builder.mutation<GenericMessageResponse, string>({
             query: (username) => ({
                 url: `users/${username}/unfollow/`,
                 method: 'POST'
@@ -171,7 +173,35 @@ const api = createApi({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Posts']
-        })
+        }),
+        likePost: builder.mutation<GenericMessageResponse, number>({
+            query: (id) => ({
+                url: `posts/${id}/like/`,
+                method: 'POST'
+            }),
+            invalidatesTags: ['Posts']
+        }),
+        unlikePost: builder.mutation<GenericMessageResponse, number>({
+            query: (id) => ({
+                url: `posts/${id}/unlike/`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Posts']
+        }),
+        createComment: builder.mutation<GetCommentsResponse, CreateCommentPayload>({
+            query: ({id, content}) => ({
+                url: `posts/${id}/comment/`,
+                method: 'POST',
+                body: {
+                    content: content
+                }
+            }),
+            invalidatesTags: ['Comments']
+        }),
+        getComments: builder.query<GetCommentsResponse[], number>({
+            query: (id) => `posts/${id}/comments/`,
+            providesTags: ['Comments']
+        }),
     })
 })
 
@@ -189,7 +219,11 @@ export const {
     useGetMyPostsQuery,
     useGetFeedQuery,
     useGetUserPostsQuery,
-    useDeletePostMutation
+    useDeletePostMutation,
+    useLikePostMutation,
+    useUnlikePostMutation,
+    useCreateCommentMutation,
+    useGetCommentsQuery
 } = api
 
 export default api
