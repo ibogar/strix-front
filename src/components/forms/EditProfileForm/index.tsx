@@ -12,6 +12,16 @@ interface Props {
     username: string
 }
 
+interface EditProfileFormValues {
+    name: string
+    username: string
+    bio: string
+    profilePicture: File | null
+    currentPassword: string
+    newPassword: string
+    confirmNewPassword: string
+}
+
 const EditProfileForm = ({ username: usernameProp }: Props) => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)
@@ -19,7 +29,7 @@ const EditProfileForm = ({ username: usernameProp }: Props) => {
     const [ editProfile ] = useEditProfileMutation()
     const navigate = useNavigate()
 
-    const form = useFormik({
+    const form = useFormik<EditProfileFormValues>({
         initialValues: {
             fullName: '',
             username: '',
