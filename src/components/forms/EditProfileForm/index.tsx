@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface EditProfileFormValues {
-    name: string
+    fullName: string
     username: string
     bio: string
     profilePicture: File | null
