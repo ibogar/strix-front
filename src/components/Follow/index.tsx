@@ -37,7 +37,7 @@ const Follow = ({followingList, followersList}: Props) => {
             {followersList?.map((user) => (
                 <UserCard 
                     key={user.id}
-                    profilePic={${user.profile_picture}} 
+                    profilePic={user.profile_picture} 
                     fullName={user.full_name} 
                     username={user.username} 
                 />    
