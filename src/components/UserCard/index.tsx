@@ -22,7 +22,7 @@ const UserCard = ({ profilePic, fullName, username, isFollowing }: Props) => {
                 <S.FolUser>{fullName}</S.FolUser>
                 <S.FolUserName>#{username}</S.FolUserName>
             </S.FolUserLink>
-            {!path.endsWith('/followers') &&
+            {path === '/following' &&
                 <S.FolUserBtn
                     className={isFollowing ? "negative" : "positive"}
                     onClick={() => (isFollowing ? 
