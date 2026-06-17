@@ -20,6 +20,9 @@ const Feed = ({ fullName, posts }: Props) => {
             <S.FeedContainer>
                 {path === '/' ? (
                     <NewPost />
+                ) : path === '/my_profile' ? (
+                    <PageTitle>{userFirstName}'s profile</PageTitle>
+                    <NewPost />
                 ) : (
                     <PageTitle>{userFirstName}'s profile</PageTitle>
                 )}
