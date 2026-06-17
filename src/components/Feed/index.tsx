@@ -18,14 +18,15 @@ const Feed = ({ fullName, posts }: Props) => {
     return (
         <>
             <S.FeedContainer>
-                {path === '/' ? (
-                    <NewPost />
-                ) : path === '/my_profile' ? (
-                    <PageTitle>{userFirstName}'s profile</PageTitle>
-                    <NewPost />
-                ) : (
-                    <PageTitle>{userFirstName}'s profile</PageTitle>
-                )}
+                <>
+                    {path !== '/' && (
+                        <PageTitle>{userFirstName}'s profile</PageTitle>
+                    )}
+                
+                    {(path === '/' || path === '/my_profile') && (
+                        <NewPost />
+                    )}
+                </>
 
                 {posts?.map((post) => (
                     <Post 
